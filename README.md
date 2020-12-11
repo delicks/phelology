@@ -12,7 +12,5 @@
 另外，还需要额外安装以下包：
 
 ```bash
-conda install gdal
 conda install -c conda-forge rasterio
-pip install ad
 ```
