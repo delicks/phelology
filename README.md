@@ -3,7 +3,7 @@
 物候期提取的Python脚本，包括：
 
 - [x] SG滤波
-- [ ] double logistic 拟合
+- [x] double logistic 拟合
 - [ ] 物候期提取（SOS、EOS、LOS）
 
 ## 依赖项
