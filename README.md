@@ -4,13 +4,36 @@
 
 - [x] SG滤波
 - [x] double logistic 拟合
-- [ ] 物候期提取（SOS、EOS、LOS）
+- [x] 物候期提取（SOS、EOS、LOS）
 
 ## 依赖项
-需要安装 Anaconda3，下载地址 [Windows 64位](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2020.11-Windows-x86_64.exe) [Windows 32位](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2020.11-Windows-x86.exe)
+需要安装 Anaconda3，注意对应 Python 版本为 3.7 及以下。
 
 另外，还需要额外安装以下包：
 
 ```bash
 conda install -c conda-forge rasterio
 ```
+
+## 数据预处理
+
+需要输入的数据有两个，分别为：
+
+- **时间序列影像**：命名规则为 `<年份>.tif`，如 `2019.tif` 表示2019年的时间序列影像。每一个 `*.tif` 影像中存储了23个时期的 NDVI 二维影像，第一个波段为 DOY = 1 的影像，第二个波段为 DOY = 17 的影像，以此类推。注：DOY 表示日序，即在一年中的第几天。
+- **掩膜影像**：单波段影像，维度、空间参考与时间序列影像一致。其中影像值大于 0 表示这个像素的数据在研究区内，否则在研究区外不参与计算。
+
+### 时间序列影像的生成
+
+1. 在 `ENVI` 或 `QGIS` 中打开某一年的所有影像
+2. 找到 **Layer stacking**（`ENVI`）或 **merge**（`QGIS`），把所有影像**按顺序**添加进来，记得查看投影信息，选择地理经纬度，WGS-84 坐标系（EPSG: 4326）。
+3. 导出到内存或文件中。
+4. 把 layer stacking 导出的影像格式转换为 `GeoTiff`（另存为后选择 `tiff` 格式）
+
+### 掩膜影像的生成
+
+1. 在 GIS 软件中打开研究区域的矢量文件（`*.shp`）
+2. 在工具箱🧰中搜索**栅格转矢量**（`ArcGIS`）或**Rasterize**（`QGIS`）
+3. **要素集**选择研究区域的矢量文件（`*.shp`），**字段值**选择你想写入到影像中的字段（对于小研究区的 shapefile，可以选择 `ORIG_FID` 字段）
+4. 输出的**影像范围**、**分辨率**、**坐标系统** 都与时间序列的 `*.tif` 一致。
+5. 导出为 `GeoTiff` 文件，此处文件名需要与代码中统一。
+
