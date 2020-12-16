@@ -2,9 +2,11 @@
 
 物候期提取的Python脚本，包括：
 
-- [x] SG滤波
-- [x] double logistic 拟合
-- [x] 物候期提取（SOS、EOS、LOS）
+- [x] SG滤波 (`SG Filter.ipynb`)
+- [x] double logistic 拟合 (`doubleLogistic.ipynb`)
+- [x] 物候期提取（SOS、EOS、LOS）(`phenology.ipynbs`)
+
+其中，物候期提取的代码包括了完整的操作流程，只需要预处理好的文件输入即可。
 
 ## 依赖项
 需要安装 Anaconda3，注意对应 Python 版本为 3.7 及以下。
